@@ -17,20 +17,18 @@ export class App extends Component {
 
   handleSubmit = formState => {
     const { name, number } = formState;
-    const { contacts } = this.state
-    
-    if(contacts.some(contact => contact.name === name))
-    {
+    const { contacts } = this.state;
+
+    if (contacts.some(contact => contact.name === name)) {
       alert(`${name} is already in contacrs`);
       return;
     }
-    
-    
 
     this.setState(prevState => ({
       contacts: [...prevState.contacts, { name, number }],
     }));
   };
+
   handleFindInput = value => {
     const { contacts } = this.state;
 
@@ -39,11 +37,17 @@ export class App extends Component {
       return;
     }
 
-    const find = contacts.filter(contact =>
+    const findArray = contacts.filter(contact =>
       contact.name.toLowerCase().includes(value.toLowerCase())
     );
 
-    this.setState({ filter: find });
+    this.setState({ filter: findArray });
+  };
+
+  onDeleteContact = name => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.name !== name),
+    }));
   };
 
   render() {
@@ -56,7 +60,11 @@ export class App extends Component {
         <h2>Contacts</h2>
         <p>Find contacts by name</p>
         <Filter onChangeInput={this.handleFindInput} />
-        <ContactList contactList={contacts} filterList={filter} />
+        <ContactList
+          contactList={contacts}
+          filterList={filter}
+          onDeleteContact={this.onDeleteContact}
+        />
       </div>
     );
   }
