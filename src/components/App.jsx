@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
 import style from './App.module.css';
+import { ContactForm } from './ContactForm/ContactForm';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './ContactList/ContactList';
 
 export class App extends Component {
   state = {
@@ -11,94 +13,50 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  };
+  handleSubmit = formState => {
+    const { name, number } = formState;
+    const { contacts } = this.state
+    
+    if(contacts.some(contact => contact.name === name))
+    {
+      alert(`${name} is already in contacrs`);
+      return;
+    }
+    
+    
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const { name, number } = this.state;
     this.setState(prevState => ({
       contacts: [...prevState.contacts, { name, number }],
     }));
-
-    // e.currentTarget.reset();
-    console.log(this.state);
   };
-  handleFindInput = (e) => {
-    const { contacts, filter } = this.state;
-    const { value } = e.currentTarget;
-    if (value === "") {
-      this.setState({ filter: "" });
-    return
+  handleFindInput = value => {
+    const { contacts } = this.state;
+
+    if (value === '') {
+      this.setState({ filter: '' });
+      return;
     }
-    console.log(value);
-    const find= contacts.filter(contact =>
-       contact.name.toLowerCase().includes(value.toLowerCase()) 
-         
+
+    const find = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(value.toLowerCase())
     );
-    this.setState({filter:find})
-    console.log(filter);
-  }
+
+    this.setState({ filter: find });
+  };
 
   render() {
-    const { contacts,filter } = this.state;
+    const { contacts, filter } = this.state;
     return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '15px',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
+      <div className={style.section}>
         <h1>Phonebook</h1>
-        <form className={style.form} onSubmit={this.handleSubmit}>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            onChange={this.handleChange}
-          />
+        <ContactForm onSubmit={this.handleSubmit} />
 
-          <label>Namber</label>
-          <input
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            onChange={this.handleChange}
-          />
-
-          <button type="submit">Add contact</button>
-        </form>
         <h2>Contacts</h2>
         <p>Find contacts by name</p>
-        <input
-          name="filter"
-          className={style.input_seach}
-          onChange={this.handleFindInput}
-        />
-
-        <ul className={style.list_contacts}>
-          { ((filter==="")?contacts:filter).map(({ name, number }) => (
-            <li key={nanoid()}>
-              {name}: {number}
-            </li>
-          ))}
-        </ul>
+        <Filter onChangeInput={this.handleFindInput} />
+        <ContactList contactList={contacts} filterList={filter} />
       </div>
     );
   }
