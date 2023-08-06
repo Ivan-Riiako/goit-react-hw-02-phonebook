@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 import style from './ContactForm.module.css';
 
 export class ContactForm extends Component {
@@ -7,7 +8,8 @@ export class ContactForm extends Component {
     name: '',
     number: '',
   };
-
+ 
+  
   handleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
@@ -16,14 +18,17 @@ export class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state);
-    // e.currentTarget.reset();
+    e.currentTarget.reset();
   };
 
   render() {
+     const nameImputId = nanoid();
+     const tellNumberImputId = nanoid();
     return (
       <form className={style.form} onSubmit={this.handleSubmit}>
-        <label>Name</label>
+        <label htmlFor={nameImputId} >Name</label>
         <input
+          id={nameImputId}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -31,8 +36,9 @@ export class ContactForm extends Component {
           required
           onChange={this.handleChange}
         />
-        <label>Namber</label>
+        <label htmlFor={tellNumberImputId}>Namber</label>
         <input
+          id={tellNumberImputId}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -45,3 +51,7 @@ export class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
