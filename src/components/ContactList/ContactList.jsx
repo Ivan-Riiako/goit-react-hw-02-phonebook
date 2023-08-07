@@ -27,3 +27,7 @@ ContactList.propTypes = {
   ]).isRequired,
   onDeleteContact: PropTypes.func.isRequired,
 };
+// Specifies the default values for props:
+ContactList.defaultProps = {
+  filterList: '',
+};
