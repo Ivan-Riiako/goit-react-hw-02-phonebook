@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
 
 import style from './ContactList.module.css';
 
@@ -11,8 +10,8 @@ export const ContactList = ({
 }) => {
   return (
     <ul className={style.list_contacts}>
-      {(filter === '' ? contacts : filter).map(({ name, number }) => (
-        <li key={nanoid()}>
+      {(filter === '' ? contacts : filter).map(({ name, number,id }) => (
+        <li key={id}>
           {name}: {number}{' '}
           <button onClick={() => onDeleteContact(name)}>Delete</button>
         </li>

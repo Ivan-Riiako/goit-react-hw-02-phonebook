@@ -3,6 +3,7 @@ import style from './App.module.css';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
+import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
@@ -25,7 +26,7 @@ export class App extends Component {
     }
 
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, { name, number }],
+      contacts: [...prevState.contacts, { name, number, id:nanoid()}],
     }));
   };
 
@@ -44,7 +45,7 @@ export class App extends Component {
     this.setState({ filter: findArray });
   };
 
-  onDeleteContact = name => {
+  hendleDeleteContact = name => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.name !== name),
     }));
@@ -63,7 +64,7 @@ export class App extends Component {
         <ContactList
           contactList={contacts}
           filterList={filter}
-          onDeleteContact={this.onDeleteContact}
+          onDeleteContact={this.hendleDeleteContact}
         />
       </div>
     );
