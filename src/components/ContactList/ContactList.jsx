@@ -13,7 +13,7 @@ import style from './ContactList.module.css';
       {(filter === '' ? contacts : filter).map(({ name, number, id }) => (
         <li key={id}>
           {name}: {number}
-          <button onClick={() => onDeleteContact(id)}>Delete</button>
+          <button type='button' onClick={() => onDeleteContact(id)}>Delete</button>
         </li>
       ))}
     </ul>
