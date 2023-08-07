@@ -25,13 +25,13 @@ export class ContactForm extends Component {
   render() {
     const nameImputId = nanoid();
     const tellNumberImputId = nanoid();
-    const { name, number } = this.state;
+    // const { name, number } = this.state;
     return (
       <form className={style.form} onSubmit={this.handleSubmit}>
         <label htmlFor={nameImputId}>Name</label>
         <input
           id={nameImputId}
-          value={name}
+          // value={name}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -42,7 +42,7 @@ export class ContactForm extends Component {
         <label htmlFor={tellNumberImputId}>Namber</label>
         <input
           id={tellNumberImputId}
-          value={number}
+          // value={number}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
