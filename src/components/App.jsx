@@ -45,9 +45,9 @@ export class App extends Component {
     this.setState({ filter: findArray });
   };
 
-  hendleDeleteContact = name => {
+  hendleDeleteContact = id => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.name !== name),
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
 
