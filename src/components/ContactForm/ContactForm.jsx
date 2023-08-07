@@ -6,13 +6,15 @@ import style from './ContactForm.module.css';
 export class ContactForm extends Component {
   state = {
     name: '',
-    number: 0,
+    number: '',
   };
 
   handleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
 // исправление ошибки в консоли number
+    // if (name === 'name') {
+    // return}
     // const regex =
     //   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
 
@@ -55,9 +57,9 @@ export class ContactForm extends Component {
           type="tel"
           name="number"
           // оригинальный паттерн из-за которого ошибка в консоли
-          // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           // новый исправленный паттерн \\
-          pattern="\+?\d{1,4}"
+          // pattern="\+?\d{1,4}?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           onChange={this.handleChange}

@@ -11,7 +11,7 @@ export const ContactList = ({
     <ul className={style.list_contacts}>
       {(filter === '' ? contacts : filter).map(({ name, number, id }) => (
         <li key={id}>
-          {name}: {number}{' '}
+          {name}: {number}
           <button onClick={() => onDeleteContact(name)}>Delete</button>
         </li>
       ))}
