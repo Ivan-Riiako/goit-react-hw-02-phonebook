@@ -12,6 +12,13 @@ export class ContactForm extends Component {
   handleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
+// исправление ошибки в консоли number
+    // const regex =
+    //   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
+
+    // if (regex.test(value)) {
+    //   this.setState({ number: value });
+    // }
   };
 
   handleSubmit = e => {
@@ -33,7 +40,10 @@ export class ContactForm extends Component {
           value={name}
           type="text"
           name="name"
+          // оригинальный паттерн из-за которого ошибка в консоли
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          // новый исправленный паттерн \\
+          // pattern="^[a-zA-Zа-яА-Я]+(['\- ][a-zA-Zа-яА-Я ]*[a-zA-Zа-яА-Я])?$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           onChange={this.handleChange}
@@ -44,6 +54,7 @@ export class ContactForm extends Component {
           value={number}
           type="tel"
           name="number"
+          // оригинальный паттерн из-за которого ошибка в консоли
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
