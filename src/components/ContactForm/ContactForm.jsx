@@ -18,11 +18,12 @@ export class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state);
+    this.setState({ name: '', number: '' });
     e.currentTarget.reset();
   };
 
   render() {
-     const nameImputId = nanoid();
+    const nameImputId = nanoid();
     const tellNumberImputId = nanoid();
     const { name, number } = this.state;
     return (
