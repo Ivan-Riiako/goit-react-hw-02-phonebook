@@ -58,8 +58,6 @@ export class ContactForm extends Component {
           name="number"
           // оригинальный паттерн из-за которого ошибка в консоли
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          // новый исправленный паттерн \\
-          // pattern="\+?\d{1,4}?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           onChange={this.handleChange}
