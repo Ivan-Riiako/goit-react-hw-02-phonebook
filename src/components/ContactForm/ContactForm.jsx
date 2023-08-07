@@ -13,15 +13,7 @@ import style from './ContactForm.module.css';
   handleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
-// исправление ошибки в консоли number
-    // if (name === 'name') {
-    // return}
-    // const regex =
-    //   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
 
-    // if (regex.test(value)) {
-    //   this.setState({ number: value });
-    // }
   };
 
   handleSubmit = e => {
