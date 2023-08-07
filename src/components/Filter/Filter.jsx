@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './Filter.module.css';
 
-export class Filter extends Component {
+class Filter extends Component {
  
   handleChange = e => {
     const { value } = e.currentTarget;
@@ -26,3 +26,5 @@ export class Filter extends Component {
 Filter.propTypes = {
   onFindInput: PropTypes.func.isRequired,
 };
+
+export default Filter;

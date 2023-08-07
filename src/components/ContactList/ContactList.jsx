@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import style from './ContactList.module.css';
 
-export const ContactList = ({
+ const ContactList = ({
   contactList: contacts,
   filterList: filter,
   onDeleteContact,
@@ -31,3 +32,4 @@ ContactList.propTypes = {
 ContactList.defaultProps = {
   filterList: '',
 };
+export default ContactList;

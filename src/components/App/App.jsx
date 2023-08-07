@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
-import style from './App.module.css';
-import { ContactForm } from './ContactForm/ContactForm';
-import { Filter } from './Filter/Filter';
-import { ContactList } from './ContactList/ContactList';
 
-export class App extends Component {
+import style from './App.module.css';
+import ContactForm from 'components/ContactForm';
+import Filter from 'components/Filter';
+import ContactList from 'components/ContactList';
+
+class App extends Component {
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -70,3 +71,6 @@ export class App extends Component {
     );
   }
 }
+
+
+export default App;
