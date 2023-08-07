@@ -6,7 +6,7 @@ export class Filter extends Component {
  
   handleChange = e => {
     const { value } = e.currentTarget;
-    this.props.onChangeInput(value);
+    this.props.onFindInput(value);
   };
 
   render() {
@@ -24,5 +24,5 @@ export class Filter extends Component {
 }
 
 Filter.propTypes = {
-  onChangeInput: PropTypes.func.isRequired,
+  onFindInput: PropTypes.func.isRequired,
 };

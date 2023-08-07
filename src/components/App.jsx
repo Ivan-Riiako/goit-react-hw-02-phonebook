@@ -45,7 +45,7 @@ export class App extends Component {
     this.setState({ filter: findArray });
   };
 
-  hendleDeleteContact = id => {
+  handleDeleteContact = id => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
@@ -60,11 +60,11 @@ export class App extends Component {
 
         <h2>Contacts</h2>
         <p>Find contacts by name</p>
-        <Filter onChangeInput={this.handleFindInput} />
+        <Filter onFindInput={this.handleFindInput} />
         <ContactList
           contactList={contacts}
           filterList={filter}
-          onDeleteContact={this.hendleDeleteContact}
+          onDeleteContact={this.handleDeleteContact}
         />
       </div>
     );
