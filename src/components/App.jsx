@@ -55,22 +55,29 @@ class App extends Component {
   }
 
   render() {
-    const { filter } = this.state;
-    const contacts = this.makeContactList();
+     const { filter } = this.state;
+    const {
+      handleSubmit,
+      handleChangeFindInput,
+      handleDeleteContact,
+      makeContactList,
+    } = this;
+    const contacts =makeContactList();
+
     return (
       <div className={style.section}>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.handleSubmit} />
+        <ContactForm onSubmit={handleSubmit} />
 
         <h2>Contacts</h2>
         <p>Find contacts by name</p>
         <Filter
-          onFindInput={this.handleChangeFindInput}
+          onFindInput={handleChangeFindInput}
           inputValueSeach={filter}
         />
         <ContactList
           contactList={contacts}
-          onDeleteContact={this.handleDeleteContact}
+          onDeleteContact={handleDeleteContact}
         />
       </div>
     );
