@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import style from './ContactForm.module.css';
 
@@ -11,7 +11,7 @@ const contactNameRegExp =
   /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .matches(contactNameRegExp, 'Phone number is not valid')
+    .matches(contactNameRegExp, 'Contact name  is not valid')
     .required('Contact name   is require'),
 
   // number: Yup.number()
@@ -26,11 +26,13 @@ const validationSchema = Yup.object().shape({
     .required('A phone number is required'),
 });
 
-class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+
+
+const ContactForm =({onSubmit})=> {
+  // state = {
+  //   name: '',
+  //   number: '',
+  // };
 
   // handleChange = e => {
   //   const { name, value } = e.currentTarget;
@@ -44,72 +46,36 @@ class ContactForm extends Component {
   //   // e.currentTarget.reset();
   // };
 
-  render() {
+  // render() {
+  const initialValues = {
+    name: '',
+    number: '',
+  };
     const nameImputId = nanoid();
     const tellNumberImputId = nanoid();
-    const { name, number } = this.state;
     return (
-      <>
-        <Formik
-          initialValues={{
-            name: `${name}`,
-            number: `${number}`,
-          }}
-          validationSchema={validationSchema}
-          onSubmit={(value, actions) => {
-            this.props.onSubmit(value);
-            actions.resetForm();
-          }}
-        >
-          {({ errors, touched }) => (
-            <Form className={style.form}>
-              <label htmlFor={nameImputId}>Name</label>
-              <Field id={nameImputId} name="name" type="text" />
-              {errors.name && <div id="name">{errors.name}</div>}
-
-              <label htmlFor={tellNumberImputId}>Namber</label>
-              <Field id={tellNumberImputId} name="number" type="tel" />
-              {errors.number && <div id="number">{errors.number}</div>}
-
-              <button type="submit">Add contact</button>
-            </Form>
-          )}
-        </Formik>
-
-        {/* <form className={style.form} onSubmit={this.handleSubmit}>
-          <label htmlFor={nameImputId}>Name</label>
-          <input
-            id={nameImputId}
-            value={name}
-            type="text"
-            name="name"
-            // оригинальный паттерн из-за которого ошибка в консоли
-            // при дефолтном экспорте ошибки нет
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            // новый исправленный паттерн \\
-            // pattern="^[a-zA-Zа-яА-Я]+(['\- ][a-zA-Zа-яА-Я ]*[a-zA-Zа-яА-Я])?$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            onChange={this.handleChange}
-          />
-          <label htmlFor={tellNumberImputId}>Namber</label>
-          <input
-            id={tellNumberImputId}
-            value={number}
-            type="tel"
-            name="number"
-            // оригинальный паттерн из-за которого ошибка в консоли
-            // при дефолтном экспорте ошибки нет
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            onChange={this.handleChange}
-          />
-          <button type="submit">Add contact</button>
-        </form> */}
-      </>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(value, { resetForm }) => {
+          onSubmit(value);
+          resetForm();
+        }}
+      >
+        { 
+          <Form className={style.form}>
+            <label htmlFor={nameImputId}>Name</label>
+            <Field id={nameImputId} name="name" type="text" />
+            <ErrorMessage name="name">{msg => <span>{msg}</span>}</ErrorMessage>
+            <label htmlFor={tellNumberImputId}>Namber</label>
+            <Field id={tellNumberImputId} name="number" type="tel" />
+            <ErrorMessage name="number">{msg => <div>{msg}</div>}</ErrorMessage>
+            <button type="submit">Add contact</button>
+          </Form>
+        }
+      </Formik>
     );
-  }
+  // }
 }
 
 ContactForm.propTypes = {
