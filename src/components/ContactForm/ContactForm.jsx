@@ -66,7 +66,7 @@ const ContactForm =({onSubmit})=> {
           <Form className={style.form}>
             <label htmlFor={nameImputId}>Name</label>
             <Field id={nameImputId} name="name" type="text" />
-            <ErrorMessage name="name">{msg => <span>{msg}</span>}</ErrorMessage>
+            <ErrorMessage name="name">{msg => <div>{msg}</div>}</ErrorMessage>
             <label htmlFor={tellNumberImputId}>Namber</label>
             <Field id={tellNumberImputId} name="number" type="tel" />
             <ErrorMessage name="number">{msg => <div>{msg}</div>}</ErrorMessage>
