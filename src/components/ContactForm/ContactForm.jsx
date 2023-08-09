@@ -3,18 +3,27 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-
 import style from './ContactForm.module.css';
 
-const SignupSchema = Yup.object().shape({
+const phoneRegExp =
+  /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
+const contactNameRegExp =
+  /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Too Short!')
-    .max(10, 'Too Long!')
-    .required('Required'),
+    .matches(contactNameRegExp, 'Phone number is not valid')
+    .required('Contact name   is require'),
+
+  // number: Yup.number()
+  //   .typeError("That doesn't look like a phone number")
+  //   .positive("A phone number can't start with a minus")
+  //   .integer("A phone number can't include a decimal point")
+  //   .min(8)
+  //   .required('A phone number is required'),
+
   number: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .matches(phoneRegExp, 'Phone number is not valid')
+    .required('A phone number is required'),
 });
 
 class ContactForm extends Component {
@@ -46,23 +55,25 @@ class ContactForm extends Component {
             name: `${name}`,
             number: `${number}`,
           }}
-          validationSchema={SignupSchema}
+          validationSchema={validationSchema}
           onSubmit={(value, actions) => {
             this.props.onSubmit(value);
             actions.resetForm();
           }}
         >
-          {
+          {({ errors, touched }) => (
             <Form className={style.form}>
               <label htmlFor={nameImputId}>Name</label>
               <Field id={nameImputId} name="name" type="text" />
+              {errors.name && <div id="name">{errors.name}</div>}
 
               <label htmlFor={tellNumberImputId}>Namber</label>
               <Field id={tellNumberImputId} name="number" type="tel" />
+              {errors.number && <div id="number">{errors.number}</div>}
 
               <button type="submit">Add contact</button>
             </Form>
-          }
+          )}
         </Formik>
 
         {/* <form className={style.form} onSubmit={this.handleSubmit}>
