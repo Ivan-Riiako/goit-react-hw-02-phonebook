@@ -31,19 +31,8 @@ class App extends Component {
     }));
   };
 
-  handleFindInput = value => {
-    const { contacts } = this.state;
-
-    if (value === '') {
-      this.setState({ filter: '' });
-      return;
-    }
-
-    const findArray = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(value.toLowerCase())
-    );
-
-    this.setState({ filter: findArray });
+  handleChangeFindInput = value => {
+    this.setState({ filter: value });
   };
 
   handleDeleteContact = id => {
@@ -51,9 +40,23 @@ class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
+  makeContactList = () => {
+    const { contacts, filter } = this.state;
+    const filterNormalize = filter.toLowerCase();
+
+    if (filter === '') {
+      return contacts;
+    }
+    const findNewArray = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filterNormalize)
+    );
+    return findNewArray;
+
+  }
 
   render() {
-    const { contacts, filter } = this.state;
+    const { filter } = this.state;
+    const contacts = this.makeContactList();
     return (
       <div className={style.section}>
         <h1>Phonebook</h1>
@@ -61,10 +64,12 @@ class App extends Component {
 
         <h2>Contacts</h2>
         <p>Find contacts by name</p>
-        <Filter onFindInput={this.handleFindInput} />
+        <Filter
+          onFindInput={this.handleChangeFindInput}
+          inputValueSeach={filter}
+        />
         <ContactList
           contactList={contacts}
-          filterList={filter}
           onDeleteContact={this.handleDeleteContact}
         />
       </div>

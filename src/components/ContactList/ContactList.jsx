@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 import style from './ContactList.module.css';
 
  const ContactList = ({
-  contactList: contacts,
-  filterList: filter,
+  contactList,
   onDeleteContact,
 }) => {
   return (
     <ul className={style.list_contacts}>
-      {(filter === '' ? contacts : filter).map(({ name, number, id }) => (
+      {contactList.map(({ name, number, id }) => (
         <li key={id}>
           {name}: {number}
-          <button type='button' onClick={() => onDeleteContact(id)}>Delete</button>
+          <button type="button" onClick={() => onDeleteContact(id)}>
+            Delete
+          </button>
         </li>
       ))}
     </ul>
@@ -22,14 +23,7 @@ import style from './ContactList.module.css';
 
 ContactList.propTypes = {
   contactList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  filterList: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.object),
-  ]).isRequired,
   onDeleteContact: PropTypes.func.isRequired,
 };
-// Specifies the default values for props:
-ContactList.defaultProps = {
-  filterList: '',
-};
+
 export default ContactList;
